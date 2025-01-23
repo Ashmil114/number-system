@@ -4,14 +4,15 @@ import Table from "./Table";
 import { mainCovert, SYMBOLS } from "../lib/convert";
 
 const Tabs = () => {
-  const [symbols, setSymbols] = useState(0);
+  const [symbols, setSymbols] = useState(1);
   const [count, setCount] = useState(1);
   const [newNumberSet, setnewNumberSet] = useState<string[]>();
+  const [note, setnote] = useState(false);
 
   const handleConvert = () => {
     if (symbols === 1) {
       const items = [];
-      for (let c = 0; c < count; c++) {
+      for (let c = 0; c <= count; c++) {
         const item = [];
         for (let i = 0; i < c; i++) {
           item.push("0");
@@ -27,8 +28,10 @@ const Tabs = () => {
         }
       }
       setnewNumberSet(items);
+      setnote(true);
       return;
     }
+    setnote(false);
 
     if (count <= 0) {
       alert("Please enter a positive number.");
@@ -67,8 +70,16 @@ const Tabs = () => {
         {/* Content Tab 1 */}
         <div className="min-h-[20rem] h-fit">
           <div className="w-full flex justify-center pt-10 pb-5 gap-5 items-center flex-col md:flex-row">
-            <Input title="Number of Symbols" action={setSymbols} />
-            <Input title="Number want to be Count" action={setCount} />
+            <Input
+              title="Number of Symbols"
+              action={setSymbols}
+              value={symbols}
+            />
+            <Input
+              title="Number want to be Count"
+              action={setCount}
+              value={count}
+            />
             <button onClick={handleConvert} className="btn btn-ghost mt-8">
               Convert
             </button>
@@ -93,6 +104,13 @@ const Tabs = () => {
               </>
             ))}
           </div>
+          <div className="pt-5 md:px-20 pb-20 text-center">
+            {note && (
+              <span>
+                NOTE : 0<sup>n</sup> remaing n zeros
+              </span>
+            )}
+          </div>
           <Table data={newNumberSet || []} />
         </div>
       </div>
@@ -110,8 +128,16 @@ const Tabs = () => {
       >
         <div className="min-h-[20rem]">
           <div className="w-full flex justify-center pt-10 pb-20 gap-5 items-center flex-col">
-            <Input title="Number of Symbols" action={setSymbols} />
-            <Input title="Number want to be Convert" action={setCount} />
+            <Input
+              title="Number of Symbols"
+              action={setSymbols}
+              value={symbols}
+            />
+            <Input
+              title="Number want to be Convert"
+              action={setCount}
+              value={count}
+            />
             <div className="pt-2 pb-2 md:px-20 text-center">
               {symbols > 0 && (
                 <h1 className="text-xl font-black mb-2">SYMBOLS:</h1>
@@ -135,31 +161,18 @@ const Tabs = () => {
                   </button>
                 )
               : ""}
-            <div className="w-full flex justify-center items-center">
+            <div className="w-full flex justify-center items-center flex-col">
               <h1 className="text-4xl font-black">
                 {newNumberSet && symbols !== 1 ? newNumberSet[count] : ""}
               </h1>
               <h1 className="text-4xl font-black">
-                {newNumberSet && symbols === 1 ? newNumberSet[count - 1] : ""}
+                {newNumberSet && symbols === 1 ? newNumberSet[count] : ""}
               </h1>
+              {symbols === 1 && <span>NOTE : 0.n remaing n zeros</span>}
             </div>
           </div>
         </div>
       </div>
-
-      {/* <input
-        type="radio"
-        name="my_tabs_2"
-        role="tab"
-        className="tab"
-        aria-label="_"
-      />
-      <div
-        role="tabpanel"
-        className="tab-content bg-base-100 border-base-300 rounded-box p-6"
-      >
-        <div className="min-h-[20rem]">...</div>
-      </div> */}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 const Input = (props: {
   title: string;
   action: React.Dispatch<React.SetStateAction<number>>;
+  value: number;
 }) => {
   return (
     <label className="form-control w-full max-w-xs">
@@ -15,6 +16,7 @@ const Input = (props: {
         onChange={(e) => {
           props.action(+e.target.value);
         }}
+        value={props.value}
       />
       {/* <div className="label">
         <span className="label-text-alt">Bottom Left label</span>
