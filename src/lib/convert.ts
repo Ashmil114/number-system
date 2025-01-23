@@ -1,4 +1,4 @@
-const SYMBOLS = [
+export const SYMBOLS = [
   "0",
   "1",
   "2",
